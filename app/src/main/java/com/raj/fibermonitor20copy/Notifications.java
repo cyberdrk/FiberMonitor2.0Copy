@@ -1,26 +1,24 @@
 package com.raj.fibermonitor20copy;
 
-import java.sql.Timestamp;
-
 /**
  * Created by RAJ on 29-03-2018.
  */
 
 public class Notifications {
 
-    Number adjustmentValue,distance;
-    Timestamp issueTime,repairTime,predictedFailureTime;
-    String msg,linkName;
+    Double adjustmentValue,distance;
+    String msg,linkName,issueTime,repairTime,predictedFailureTime;
     Boolean status;
+
 
     public Notifications() {
     }
 
-    public Notifications(Number adjustmentValue,Timestamp damageTime,Number distance,String msg,Timestamp repairTime,Boolean status,String linkname,Timestamp predictedFailureTime){
+    public Notifications(Double adjustmentValue, String issueTime, Double distance, String msg, String repairTime, Boolean status, String linkname, String predictedFailureTime){
 
         this.predictedFailureTime=predictedFailureTime;
         this.adjustmentValue=adjustmentValue;
-        this.issueTime=damageTime;
+        this.issueTime=issueTime;
         this.linkName=linkname;
         this.distance=distance;
         this.msg=msg;

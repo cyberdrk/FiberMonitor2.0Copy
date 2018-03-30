@@ -269,7 +269,7 @@ public class LineActivity extends AppCompatActivity {
 
         insertionLossRealTimeCount=0;
         mSeries2.resetData(new DataPoint[] {new DataPoint(insertionLossRealTimeCount,0)});
-        
+
         finish();
     }
 }
