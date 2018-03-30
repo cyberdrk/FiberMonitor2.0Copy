@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -31,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
     CustomView mumbaiDelhi,delhiKolkata,kolkataSecunderabad,secunderabadChennai,chennaiMumbai;
     Boolean flag=true;
     MediaPlayer mp;
+
     public CollectionReference mColRefMD,mColRefDK,mColRefKS,mColRefSC,mColRefCM;
     RecyclerView recyclerView;
+    //public DocumentReference mDocRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         notifications.status=doc.getBoolean("status");
                         notifications.distance=doc.getDouble("distance");
                         notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notifications.type=doc.getString("type");
+                        notifications.messageNumber=doc.getDouble("messageNumber");
                         notificationsList.add(notifications);
                         //messagesListStatus.add(doc.getBoolean("status"));
                     }
@@ -367,6 +372,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+    }
+
+
+
+    static void getNotificationObject(Notifications notifications)
+    {
+        // Log.i("NotifUpdate",)
+        DocumentReference mDocRef;
+        notifications.status=true;
+        mDocRef=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection(notifications.linkName).document("MESSAGE-"+notifications.messageNumber.intValue());
+        mDocRef.set(notifications);
 
     }
 
