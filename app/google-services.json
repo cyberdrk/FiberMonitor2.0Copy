@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "27471034342",
+    "firebase_url": "https://sihrangersz.firebaseio.com",
+    "project_id": "sihrangersz",
+    "storage_bucket": "sihrangersz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27471034342:android:cab69c81d9f8f4d9",
+        "android_client_info": {
+          "package_name": "com.raj.fibermonitor20copy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27471034342-u9bth2abqdcc359eatvmkldhhmdrtgoo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raj.fibermonitor20copy",
+            "certificate_hash": "f7ee398cfe1da1d671b7ce314c5a9e92efbcabf9"
+          }
+        },
+        {
+          "client_id": "27471034342-dgnop90nahtmvmmgg4ftdfv19o1fi388.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDThLIztVD1zofufUjycsiNFDh5F7RdcoM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27471034342-dgnop90nahtmvmmgg4ftdfv19o1fi388.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
