@@ -164,7 +164,7 @@ public class LineActivity extends AppCompatActivity {
                         mSeries2.setColor(Color.GREEN);
                         graph1.getViewport().setYAxisBoundsManual(true);
                         graph1.getViewport().setMinY(99);
-                        graph1.getViewport().setMaxY(105);
+                        graph1.getViewport().setMaxY(110);
                         graph1.addSeries(mSeries2);
                         insertionLossRealTimeCount = insertionLossRealTimeCount + 1;
 

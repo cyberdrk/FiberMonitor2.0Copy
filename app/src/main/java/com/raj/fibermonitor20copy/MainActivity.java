@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mp;
 
     public CollectionReference mColRefMD,mColRefDK,mColRefKS,mColRefSC,mColRefCM;
-    RecyclerView recyclerView;
+    RecyclerView recyclerViewMD,recyclerViewDK,recyclerViewKS,recyclerViewSC,recyclerViewCM;
     //public DocumentReference mDocRef;
 
     @Override
@@ -44,8 +45,21 @@ public class MainActivity extends AppCompatActivity {
 
         mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
 
-        recyclerView=findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerViewMD=findViewById(R.id.recyclerViewMD);
+        recyclerViewMD.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerViewDK=findViewById(R.id.recyclerViewDK);
+        recyclerViewDK.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerViewKS=findViewById(R.id.recyclerViewKS);
+        recyclerViewKS.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerViewSC=findViewById(R.id.recyclerViewSC);
+        recyclerViewSC.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerViewCM=findViewById(R.id.recyclerViewCM);
+        recyclerViewCM.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
 
         ///Intialization
         mumbaiDelhi=findViewById(R.id.mumbaiDelhi);
@@ -123,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
-                recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerViewMD.setAdapter(recyclerViewAdapter);
                 Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
 
@@ -131,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-/*
 
         mColRefDK=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("DELHI-KOLKATA");
         mColRefDK.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -142,33 +155,60 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<Boolean> messagesListStatus = new ArrayList<>();
+                //List<Boolean> messagesListStatus = new ArrayList<>();
+                List<Notifications> notificationsList=new ArrayList<>();
+                List<Notifications> cardNotification=new ArrayList<>();
+
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     if (doc.get("status") != null) {
-                        messagesListStatus.add(doc.getBoolean("status"));
+                        Notifications notifications=new Notifications();
+                        notifications.predictedFailureTime=doc.getString("predictedFailureTime");
+                        notifications.msg=doc.getString("msg");
+                        notifications.linkName=doc.getString("linkName");
+                        notifications.issueTime=doc.getString("issueTime");
+                        notifications.repairTime=doc.getString("repairTime");
+                        notifications.status=doc.getBoolean("status");
+                        notifications.distance=doc.getDouble("distance");
+                        notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notifications.type=doc.getString("type");
+                        notifications.messageNumber=doc.getDouble("messageNumber");
+                        notificationsList.add(notifications);
+                        //messagesListStatus.add(doc.getBoolean("status"));
                     }
                 }
-
-                for(Boolean bol:messagesListStatus)
-                    if (!bol)
+                Boolean play=false;
+                Boolean playSkip=false;
+                for(int i=0;i<notificationsList.size();i++)
+                    if (!notificationsList.get(i).status)
                     {
+                        cardNotification.add(notificationsList.get(i));
+                        Log.d("StatusList", String.valueOf(notificationsList.get(i).status +" "+String.valueOf(i)));
                         delhiKolkata.setLineColor(Color.RED);
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mp.start();
-                        break;
+                        if(!playSkip) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mp.start();
+                            playSkip=true;
+                        }
+                        play=true;
                     }
                     else
                     {
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        delhiKolkata.setLineColor(Color.GREEN);
+                        if(!play) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            delhiKolkata.setLineColor(Color.GREEN);
+                        }
+
                     }
-                Log.d("StatusList", String.valueOf(messagesListStatus));
 
-
+                recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
+                recyclerViewDK.setAdapter(recyclerViewAdapter);
+                Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
+
         });
+
 
         mColRefKS=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("KOLKATA-SECUNDERABAD");
         mColRefKS.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -180,32 +220,60 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<Boolean> messagesListStatus = new ArrayList<>();
+                //List<Boolean> messagesListStatus = new ArrayList<>();
+                List<Notifications> notificationsList=new ArrayList<>();
+                List<Notifications> cardNotification=new ArrayList<>();
+
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     if (doc.get("status") != null) {
-                        messagesListStatus.add(doc.getBoolean("status"));
+                        Notifications notifications=new Notifications();
+                        notifications.predictedFailureTime=doc.getString("predictedFailureTime");
+                        notifications.msg=doc.getString("msg");
+                        notifications.linkName=doc.getString("linkName");
+                        notifications.issueTime=doc.getString("issueTime");
+                        notifications.repairTime=doc.getString("repairTime");
+                        notifications.status=doc.getBoolean("status");
+                        notifications.distance=doc.getDouble("distance");
+                        notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notifications.type=doc.getString("type");
+                        notifications.messageNumber=doc.getDouble("messageNumber");
+                        notificationsList.add(notifications);
+                        //messagesListStatus.add(doc.getBoolean("status"));
                     }
                 }
-
-                for(Boolean bol:messagesListStatus)
-                    if (!bol)
+                Boolean play=false;
+                Boolean playSkip=false;
+                for(int i=0;i<notificationsList.size();i++)
+                    if (!notificationsList.get(i).status)
                     {
+                        cardNotification.add(notificationsList.get(i));
+                        Log.d("StatusList", String.valueOf(notificationsList.get(i).status +" "+String.valueOf(i)));
                         kolkataSecunderabad.setLineColor(Color.RED);
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mp.start();
-                        break;
+                        if(!playSkip) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mp.start();
+                            playSkip=true;
+                        }
+                        play=true;
                     }
                     else
                     {
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        kolkataSecunderabad.setLineColor(Color.GREEN);
-                    }
-                Log.d("StatusList", String.valueOf(messagesListStatus));
+                        if(!play) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            kolkataSecunderabad.setLineColor(Color.GREEN);
+                        }
 
+                    }
+
+                recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
+                recyclerViewKS.setAdapter(recyclerViewAdapter);
+                Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
+
         });
+
 
         mColRefSC=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("SECUNDERABAD-CHENNAI");
         mColRefSC.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -217,31 +285,58 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<Boolean> messagesListStatus = new ArrayList<>();
+                //List<Boolean> messagesListStatus = new ArrayList<>();
+                List<Notifications> notificationsList=new ArrayList<>();
+                List<Notifications> cardNotification=new ArrayList<>();
+
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     if (doc.get("status") != null) {
-                        messagesListStatus.add(doc.getBoolean("status"));
+                        Notifications notifications=new Notifications();
+                        notifications.predictedFailureTime=doc.getString("predictedFailureTime");
+                        notifications.msg=doc.getString("msg");
+                        notifications.linkName=doc.getString("linkName");
+                        notifications.issueTime=doc.getString("issueTime");
+                        notifications.repairTime=doc.getString("repairTime");
+                        notifications.status=doc.getBoolean("status");
+                        notifications.distance=doc.getDouble("distance");
+                        notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notifications.type=doc.getString("type");
+                        notifications.messageNumber=doc.getDouble("messageNumber");
+                        notificationsList.add(notifications);
+                        //messagesListStatus.add(doc.getBoolean("status"));
                     }
                 }
-
-                for(Boolean bol:messagesListStatus)
-                    if (!bol)
+                Boolean play=false;
+                Boolean playSkip=false;
+                for(int i=0;i<notificationsList.size();i++)
+                    if (!notificationsList.get(i).status)
                     {
+                        cardNotification.add(notificationsList.get(i));
+                        Log.d("StatusList", String.valueOf(notificationsList.get(i).status +" "+String.valueOf(i)));
                         secunderabadChennai.setLineColor(Color.RED);
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mp.start();
-                        break;
+                        if(!playSkip) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mp.start();
+                            playSkip=true;
+                        }
+                        play=true;
                     }
                     else
                     {
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        secunderabadChennai.setLineColor(Color.GREEN);
-                    }
-                Log.d("StatusList", String.valueOf(messagesListStatus));
+                        if(!play) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            secunderabadChennai.setLineColor(Color.GREEN);
+                        }
 
+                    }
+
+                recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
+                recyclerViewSC.setAdapter(recyclerViewAdapter);
+                Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
+
         });
 
         mColRefCM=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection("CHENNAI-MUMBAI");
@@ -254,34 +349,60 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                List<Boolean> messagesListStatus = new ArrayList<>();
+                //List<Boolean> messagesListStatus = new ArrayList<>();
+                List<Notifications> notificationsList=new ArrayList<>();
+                List<Notifications> cardNotification=new ArrayList<>();
+
                 for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     if (doc.get("status") != null) {
-                        messagesListStatus.add(doc.getBoolean("status"));
+                        Notifications notifications=new Notifications();
+                        notifications.predictedFailureTime=doc.getString("predictedFailureTime");
+                        notifications.msg=doc.getString("msg");
+                        notifications.linkName=doc.getString("linkName");
+                        notifications.issueTime=doc.getString("issueTime");
+                        notifications.repairTime=doc.getString("repairTime");
+                        notifications.status=doc.getBoolean("status");
+                        notifications.distance=doc.getDouble("distance");
+                        notifications.adjustmentValue=doc.getDouble("adjustmentValue");
+                        notifications.type=doc.getString("type");
+                        notifications.messageNumber=doc.getDouble("messageNumber");
+                        notificationsList.add(notifications);
+                        //messagesListStatus.add(doc.getBoolean("status"));
                     }
                 }
-
-                for(Boolean bol:messagesListStatus)
-                    if (!bol)
+                Boolean play=false;
+                Boolean playSkip=false;
+                for(int i=0;i<notificationsList.size();i++)
+                    if (!notificationsList.get(i).status)
                     {
+                        cardNotification.add(notificationsList.get(i));
+                        Log.d("StatusList", String.valueOf(notificationsList.get(i).status +" "+String.valueOf(i)));
                         chennaiMumbai.setLineColor(Color.RED);
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        mp.start();
-                        break;
+                        if(!playSkip) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            mp.start();
+                            playSkip=true;
+                        }
+                        play=true;
                     }
                     else
                     {
-                        mp.release();
-                        mp=MediaPlayer.create(getApplicationContext(), R.raw.alarm);
-                        chennaiMumbai.setLineColor(Color.GREEN);
-                    }
-                Log.d("StatusList", String.valueOf(messagesListStatus));
+                        if(!play) {
+                            mp.release();
+                            mp = MediaPlayer.create(getApplicationContext(), R.raw.alarm);
+                            chennaiMumbai.setLineColor(Color.GREEN);
+                        }
 
+                    }
+
+                recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), cardNotification);
+                recyclerViewCM.setAdapter(recyclerViewAdapter);
+                Log.d("StatusListSS", String.valueOf(cardNotification.size()));
             }
+
         });
 
-*/
 
 
 
@@ -384,6 +505,7 @@ public class MainActivity extends AppCompatActivity {
 
     static void getNotificationObject(Notifications notifications)
     {
+
         // Log.i("NotifUpdate",)
         DocumentReference mDocRef;
         notifications.status=true;
@@ -391,6 +513,10 @@ public class MainActivity extends AppCompatActivity {
         mDocRef.set(notifications);
 
     }
+
+
+
+
 
 
 
