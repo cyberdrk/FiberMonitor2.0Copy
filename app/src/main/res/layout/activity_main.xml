@@ -259,6 +259,8 @@
 
 
             <TextView
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="@string/mumbai_delhi_notifications"
@@ -266,7 +268,9 @@
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark"
+                android:elevation="2dp"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -280,6 +284,8 @@
                 android:layout_height="40dp" />
 
             <TextView
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="@string/delhi_kolkata_notifications"
@@ -287,7 +293,8 @@
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark"
+                android:elevation="2dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -302,6 +309,8 @@
 
 
             <TextView
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="@string/kolkata_secunderabad_notifications"
@@ -309,7 +318,8 @@
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark"
+                android:elevation="2dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -324,6 +334,8 @@
 
 
             <TextView
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="@string/secunderabad_chennai_notifications"
@@ -331,7 +343,8 @@
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark"
+                android:elevation="2dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -346,6 +359,8 @@
 
 
             <TextView
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text="@string/chennai_mumbai_notifications"
@@ -353,7 +368,8 @@
                 android:textAllCaps="true"
                 android:gravity="center"
                 android:textColor="@color/black"
-                android:background="@color/colorPrimaryDark"/>
+                android:background="@color/colorPrimaryDark"
+                android:elevation="2dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"

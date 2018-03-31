@@ -81,7 +81,8 @@
             android:onClick="loginClick"
             android:textSelectHandleLeft="@android:drawable/screen_background_light_transparent"
             tools:layout_editor_absoluteX="286dp"
-            tools:layout_editor_absoluteY="286dp" />
+            tools:layout_editor_absoluteY="286dp"
+            android:elevation="8dp"/>
 
 
 
