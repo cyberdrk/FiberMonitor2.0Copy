@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -19,8 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     CustomView mumbaiDelhi,delhiKolkata,kolkataSecunderabad,secunderabadChennai,chennaiMumbai;
     Boolean flag=true;
     MediaPlayer mp;
+    FirebaseAuth mAuth;
 
     public CollectionReference mColRefMD,mColRefDK,mColRefKS,mColRefSC,mColRefCM;
     RecyclerView recyclerViewMD,recyclerViewDK,recyclerViewKS,recyclerViewSC,recyclerViewCM;
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewCM=findViewById(R.id.recyclerViewCM);
         recyclerViewCM.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+
+        mAuth=FirebaseAuth.getInstance();
 
         ///Intialization
         mumbaiDelhi=findViewById(R.id.mumbaiDelhi);
@@ -493,33 +498,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
     }
 
 
 
     static void getNotificationObject(Notifications notifications)
     {
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
-        // Log.i("NotifUpdate",)
+       // Log.i("NotifUpdate",)
         DocumentReference mDocRef;
         notifications.status=true;
+        notifications.repairTime=timeStamp;
         mDocRef=FirebaseFirestore.getInstance().collection("NOTIFICATION").document("TIER-1").collection(notifications.linkName).document("MESSAGE-"+notifications.messageNumber.intValue());
         mDocRef.set(notifications);
 
     }
 
 
-
-
-
-
-
-
-
+    public void logout(View v)
+    {
+        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        //Toast.makeText(getApplicationContext(),"Logged out Succesfully",Toast.LENGTH_SHORT).show();
+        mAuth.signOut();
+        finish();
+    }
 }

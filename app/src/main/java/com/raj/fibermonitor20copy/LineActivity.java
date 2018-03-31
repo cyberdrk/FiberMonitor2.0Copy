@@ -42,7 +42,6 @@ public class LineActivity extends AppCompatActivity {
 
         graphTextViewMD=findViewById(R.id.graphtextViewMD);
         graph1 =  findViewById(R.id.graph1);
-        graph2 = findViewById(R.id.graph2);
         graph3 = findViewById(R.id.graph3);
 
         graph1.setTitle("Insertion Loss (Real-Time)");
@@ -56,21 +55,7 @@ public class LineActivity extends AppCompatActivity {
         graph1.getGridLabelRenderer().setGridColor(Color.WHITE);
         graph1.getViewport().setXAxisBoundsManual(true);
         graph1.getViewport().setMinX(0);
-        graph1.getViewport().setMaxX(40);
-
-
-        graph2.setTitle("Insertion Loss (Predicted)");
-        graph2.setTitleColor(Color.WHITE);
-        graph2.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
-        graph2.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
-        graph2.getGridLabelRenderer().setHorizontalAxisTitle("Time");
-        graph2.getGridLabelRenderer().setVerticalAxisTitle("Loss");
-        graph2.getGridLabelRenderer().setHorizontalAxisTitleColor(Color.WHITE);
-        graph2.getGridLabelRenderer().setVerticalAxisTitleColor(Color.WHITE);
-        graph2.getGridLabelRenderer().setGridColor(Color.WHITE);
-        graph2.getViewport().setXAxisBoundsManual(true);
-        graph2.getViewport().setMinX(0);
-        graph2.getViewport().setMaxX(40);
+        graph1.getViewport().setMaxX(150);
 
 
         graph3.setTitle("OTDR (Real Time)");
@@ -84,8 +69,7 @@ public class LineActivity extends AppCompatActivity {
         graph3.getGridLabelRenderer().setGridColor(Color.WHITE);
         graph3.getViewport().setXAxisBoundsManual(true);
         graph3.getViewport().setMinX(0);
-        graph3.getViewport().setMaxX(40);
-
+        graph3.getViewport().setMaxX(150);
 
 
 
@@ -109,21 +93,21 @@ public class LineActivity extends AppCompatActivity {
             public void run() {
                 fetchInsertionLossRealTimeData();
                 fetchOTDRInitialData();
-                mHandler.postDelayed(this, 500);
+                mHandler.postDelayed(this, 100);
             }
         };
-        mHandler.postDelayed(mTimer2, 500);
+        mHandler.postDelayed(mTimer2, 100);
 
 
     }
 
 
-   /* @Override
-    public void onPause() {
-        mHandler.removeCallbacks(mTimer2);
-        super.onPause();
-    }
-*/
+    /* @Override
+     public void onPause() {
+         mHandler.removeCallbacks(mTimer2);
+         super.onPause();
+     }
+ */
     ///////Checking Internet Connectivity
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -134,20 +118,14 @@ public class LineActivity extends AppCompatActivity {
 
 
 
-
-
-
     ////Insertion Loss Real Time Data;
     public void fetchInsertionLossRealTimeData() {
-
-
-
 
         if(isNetworkAvailable()) {
             lineName=getIntent().getExtras().getString("lineName");
             graphTextViewMD.setText("Graphs (Connected)");
             Log.i("lineName",String.valueOf(lineName));
-            mDocRef = FirebaseFirestore.getInstance().collection("LOSS INSERTION").document("TIER-1").collection(lineName).document("TIME "+String.valueOf(insertionLossRealTimeCount));
+            mDocRef = FirebaseFirestore.getInstance().collection("LOSS INSERTION").document("TIER-1").collection("MUMBAI-DELHI").document("TIME "+String.valueOf(insertionLossRealTimeCount));
 
             mDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -159,8 +137,8 @@ public class LineActivity extends AppCompatActivity {
                         if(insertionLossRealTimeCount==0)
                             mSeries2.resetData(new DataPoint[] {dataPoint});
                         else
-                            mSeries2.appendData(dataPoint,true,60);
-                        mSeries2.setThickness(6);
+                            mSeries2.appendData(dataPoint,true,150);
+                        mSeries2.setThickness(10);
                         mSeries2.setColor(Color.GREEN);
                         graph1.getViewport().setYAxisBoundsManual(true);
                         graph1.getViewport().setMinY(99);
@@ -215,8 +193,8 @@ public class LineActivity extends AppCompatActivity {
                         if(otdrinitialCount==0)
                             mSeriesOTDR.resetData(new DataPoint[] {dataPointOTDR});
                         else
-                            mSeriesOTDR.appendData(dataPointOTDR,true,60);
-                        mSeriesOTDR.setThickness(6);
+                            mSeriesOTDR.appendData(dataPointOTDR,true,150);
+                        mSeriesOTDR.setThickness(10);
                         mSeriesOTDR.setColor(Color.GREEN);
                         graph3.getViewport().setYAxisBoundsManual(true);
                         graph3.getViewport().setMinY(-10);
@@ -244,22 +222,6 @@ public class LineActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -272,4 +234,6 @@ public class LineActivity extends AppCompatActivity {
 
         finish();
     }
+
+
 }
